@@ -10,8 +10,11 @@ type ProfileCardProps = {
 };
 
 const ProfileCard = ({ profile, toggleDarkMode, isDarkMode }: ProfileCardProps) => {
-  const fallbackRole = localStorage.getItem("__smartmaple__user__roles__");
+  const fallbackRole = localStorage.getItem("__smartmaple__user__roles__")?.replace(/^"|"$/g, '');;
   const roleToDisplay = profile?.role?.name || fallbackRole;
+
+  const fallbackName = localStorage.getItem("__smartmaple__user__name__")?.replace(/^"|"$/g, '');;
+  const nameToDisplay = profile?.name || fallbackName;
 
   return (
     <div className="profile-section">
@@ -23,7 +26,7 @@ const ProfileCard = ({ profile, toggleDarkMode, isDarkMode }: ProfileCardProps) 
         />
       </div>
       <div className="profile-info">
-        <h2>Welcome, {profile?.name}</h2>
+        <h2>Welcome, {nameToDisplay}</h2>
         <p>{profile?.email ?? AuthSession.getEmail()}</p>
         <p>{roleToDisplay ?? AuthSession.getRoles()}</p>
       </div>
